@@ -10,7 +10,6 @@ class DetailController extends GetxController {
   Rx<itemProduct> prd = Rx(itemProduct());
 
   RxBool _isLoading = true.obs;
-
   bool get isLoading => _isLoading.value;
 
   void getbox() {

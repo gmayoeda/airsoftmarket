@@ -1,5 +1,6 @@
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/utils/color.dart';
+import 'package:airsoftmarket/app/widget/btn_loading.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
 
@@ -146,13 +147,17 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                         Center(
-                          child: ButtonWidget(
-                            icon: Icon(Icons.app_registration,
-                                color: Colors.white),
-                            onClick: () {
-                              cx.register();
-                            },
-                            btnText: "REGISTER",
+                          child: Obx(
+                            () => cx.isLoading == true
+                                ? BtnLoading()
+                                : ButtonWidget(
+                                    icon: Icon(Icons.app_registration,
+                                        color: Colors.white),
+                                    onClick: () {
+                                      cx.register();
+                                    },
+                                    btnText: "REGISTER",
+                                  ),
                           ),
                         ),
                         Row(

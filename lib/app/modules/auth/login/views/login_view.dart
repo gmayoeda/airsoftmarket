@@ -1,5 +1,6 @@
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/utils/color.dart';
+import 'package:airsoftmarket/app/widget/btn_loading.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
 
@@ -125,15 +126,16 @@ class LoginPage extends StatelessWidget {
                         ),
                         Center(
                           child: Obx(
-                            () => ButtonWidget(
-                              icon: cx.isloading.value
-                                  ? CircularProgressIndicator()
-                                  : Icon(Icons.login, color: Colors.white),
-                              onClick: () {
-                                cx.isloading.value ? null : cx.login();
-                              },
-                              btnText: "LOGIN",
-                            ),
+                            () => cx.isLoading == true
+                                ? BtnLoading()
+                                : ButtonWidget(
+                                    icon:
+                                        Icon(Icons.login, color: Colors.white),
+                                    onClick: () {
+                                      cx.login();
+                                    },
+                                    btnText: "LOGIN",
+                                  ),
                           ),
                         ),
                         Row(

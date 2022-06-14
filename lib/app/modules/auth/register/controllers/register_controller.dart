@@ -11,6 +11,9 @@ class RegisterController extends GetxController {
 
   bool secureText = true;
 
+  RxBool _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+
   final GlobalKey<FormState> LoginFormKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -23,6 +26,8 @@ class RegisterController extends GetxController {
       return;
     }
     LoginFormKey.currentState!.save();
+
+    _isLoading.value = true;
 
     AuthProvider()
         .register(email.text, name.text, pass.text)
@@ -42,6 +47,7 @@ class RegisterController extends GetxController {
           "name": reg.data!.name,
           "token": reg.data!.token,
         };
+        _isLoading.value = false;
         box.write('users', user).then((value) {
           Get.offAllNamed(Routes.NAVBOTTOM);
         });

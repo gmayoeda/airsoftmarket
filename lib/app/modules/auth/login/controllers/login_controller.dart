@@ -9,7 +9,10 @@ import 'package:get_storage/get_storage.dart';
 class LoginController extends GetxController {
   final box = GetStorage();
   final reg = registerMember();
-  var isloading = false.obs;
+
+  RxBool _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+
   bool secureText = true;
 
   final GlobalKey<FormState> LoginFormKey = GlobalKey<FormState>();
@@ -29,7 +32,7 @@ class LoginController extends GetxController {
     LoginFormKey.currentState!.save();
 
     AuthProvider().login(email.text, pass.text).then((registerMember reg) {
-      isloading.value = true;
+      _isLoading.value = true;
       Get.snackbar(
         'Login',
         reg.message == "Response Success !"
@@ -46,7 +49,7 @@ class LoginController extends GetxController {
           "token": reg.data!.token,
         };
         box.write('users', user).then((value) async {
-          isloading.value = false;
+          _isLoading.value = true;
           // await Future.delayed(Duration(seconds: 3));
           Get.offAllNamed(Routes.NAVBOTTOM);
         });
