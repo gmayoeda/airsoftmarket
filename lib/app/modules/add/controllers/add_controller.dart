@@ -53,7 +53,7 @@ class AddController extends GetxController {
       return;
     }
     AddFormKey.currentState!.save();
-
+    _isLoading.value = true;
     if (image1 == null) {
       Get.defaultDialog(
           title: "File Image",
@@ -63,7 +63,6 @@ class AddController extends GetxController {
           radius: 5,
           content: Text('Image tidak boleh kosong!'));
     } else {
-      _isLoading.value = true;
       ProductProvider()
           .postProduct(
               token.value,
@@ -77,15 +76,15 @@ class AddController extends GetxController {
           .then((_) {
         Get.snackbar(
           'Add Product',
-          "Berhasil Menambahkan Product",
+          "Berhasil Menambahkan Data Product",
           icon: Icon(Icons.add_to_photos_rounded, color: Colors.white),
         );
         Get.offAllNamed(Routes.NAVBOTTOM);
       }).onError((error, stackTrace) {
         showSnackBar(error, onButtonClick: () {});
       });
-      _isLoading.value = false;
     }
+    _isLoading.value = false;
   }
 
   @override

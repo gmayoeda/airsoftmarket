@@ -1,4 +1,5 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unused_element
+import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/modules/home/controllers/home_controller.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
@@ -7,9 +8,6 @@ import 'package:get/get.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 class HomeView extends StatelessWidget {
-  // late Product product;
-  // HomeView({required this.product});
-
   late HomeController cx;
 
   @override
@@ -18,14 +16,15 @@ class HomeView extends StatelessWidget {
       () => HomeController(),
     );
     cx = Get.find<HomeController>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('ALL PRODUCTS'),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => Get.toNamed(Routes.ADD),
-            icon: Icon(Icons.add),
+            onPressed: () => Get.toNamed(Routes.CART),
+            icon: Icon(Icons.shopping_cart),
           ),
         ],
       ),
@@ -53,16 +52,17 @@ class HomeView extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: cx.getItemLength(),
                       itemBuilder: (BuildContext context, int index) {
-                        final prd = cx.list_prd[index];
+                        // final prd = cx.list_prd[index];
 
                         if (index < cx.list_prd.length) {
                           return InkWell(
                             onTap: (() {
-                              if (prd.id.toString() == "") {
+                              if (cx.list_prd[index].id.toString() == "") {
                               } else {
-                                print(prd.id);
-                                Get.toNamed(Routes.DETAIL, arguments: prd.id);
-                                // cx.callItemProduct(prd.id.toString());
+                                print(cx.list_prd[index].id);
+                                Get.toNamed(Routes.DETAIL,
+                                    arguments: cx.list_prd[index].id);
+                                // cx.callItemProduct(cx.list_prd[index].id.toString());
                               }
                             }),
                             child: Container(
@@ -87,7 +87,7 @@ class HomeView extends StatelessWidget {
                                   SizedBox(height: 5),
                                   FittedBox(
                                     child: Text(
-                                      prd.name,
+                                      cx.list_prd[index].name,
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -98,13 +98,15 @@ class HomeView extends StatelessWidget {
                                       Container(
                                         padding: EdgeInsets.all(10),
                                         width: 150,
-                                        height: 130,
+                                        height: 150,
                                         child: SizedBox(
                                           width: double.infinity,
                                           height: 150,
                                           child: Image.network(
-                                            cx.url + "uploads/" + prd.photo,
-                                            fit: BoxFit.fill,
+                                            cx.url +
+                                                "uploads/" +
+                                                cx.list_prd[index].photo,
+                                            fit: BoxFit.fitWidth,
                                             errorBuilder:
                                                 (context, error, stackTrace) {
                                               return Image.asset(
@@ -117,16 +119,23 @@ class HomeView extends StatelessWidget {
                                         child: Container(
                                           padding: EdgeInsets.all(10),
                                           width: 150,
-                                          height: 120,
+                                          height: 150,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                prd.description,
-                                                style: TextStyle(fontSize: 13),
+                                              Flexible(
+                                                child: Text(
+                                                  cx.list_prd[index]
+                                                      .description,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style:
+                                                      TextStyle(fontSize: 13),
+                                                ),
                                               ),
                                               SizedBox(height: 10),
                                               FittedBox(
@@ -137,15 +146,19 @@ class HomeView extends StatelessWidget {
                                                               symbol: '',
                                                               decimalDigits: 0)
                                                           .format(
-                                                              ('${prd.price}')),
+                                                              ('${cx.list_prd[index].price}')),
                                                   // textAlign: TextAlign.right,
                                                   style: TextStyle(
                                                       color: Colors.green,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 25),
+                                                      fontSize: 23),
                                                 ),
                                               ),
+                                              SizedBox(height: 20),
+                                              // _buildQty(airsoft),
+                                              // SizedBox(height: 10),
+                                              _buildAddToCart(index),
                                             ],
                                           ),
                                         ),
@@ -158,12 +171,65 @@ class HomeView extends StatelessWidget {
                             ),
                           );
                         } else {
-                          return LoadingView();
+                          return Container();
                         }
                       },
                     ),
                   ),
                 ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.toNamed(Routes.ADD);
+          },
+          // backgroundColor: Colors.green,
+          child: const Icon(Icons.add_to_photos_sharp)),
+    );
+  }
+
+  Widget _buildAddToCart(index) {
+    return InkWell(
+      onTap: () {
+        cx.addToCart(
+            cx.list_prd[index].name,
+            cx.list_prd[index].price
+                .toString()
+                .replaceAll("Rp. ", "")
+                .replaceAll(".", ""),
+            cx.list_prd[index].photo);
+      },
+      child: Container(
+        height: 32,
+        width: 115,
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.shopping_cart_checkout_sharp,
+              color: Colors.white,
+              size: 18,
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            Text(
+              "Add To Cart",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.bold),
+            )
+          ],
         ),
       ),
     );

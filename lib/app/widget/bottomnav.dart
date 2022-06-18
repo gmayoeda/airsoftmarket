@@ -1,3 +1,4 @@
+import 'package:airsoftmarket/app/modules/cart/views/cart_screen.dart';
 import 'package:airsoftmarket/app/modules/home/views/home_view.dart';
 import 'package:airsoftmarket/app/modules/profile/views/profile_view.dart';
 import 'package:airsoftmarket/app/utils/color.dart';
@@ -13,6 +14,7 @@ class _BottomNavState extends State {
 
   final _widgetOptions = [
     HomeView(),
+    // CartScreen(),
     ProfileView(),
   ];
 
@@ -26,6 +28,10 @@ class _BottomNavState extends State {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.add_shopping_cart_outlined),
+          //   label: 'Cart',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

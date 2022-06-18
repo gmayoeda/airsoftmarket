@@ -12,7 +12,7 @@ class ProductProvider extends GetConnect {
     final response = await get(
       "$url" + 'airsoft',
       headers: {"Authorization": "Bearer " + token},
-      query: {'page': '4'},
+      query: {'page': '$page'},
     );
 
     try {
@@ -56,22 +56,57 @@ class ProductProvider extends GetConnect {
       throw Exception();
     }
   }
+
+  Future<dynamic> updateProduct(
+      String token, id, name, description, price) async {
+    final form = FormData({
+      'id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+    });
+    final response = await post(
+      "$url" + 'airsoft/update',
+      form,
+      headers: {"Authorization": "Bearer " + token},
+    );
+    try {
+      print("DATA RESPONSE UPDATE PRODUCT : ${response.body}");
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<dynamic> updateProductWimage(
+      String token, id, name, description, price, File file) async {
+    int rand = new Math.Random().nextInt(1000000);
+    final form = FormData({
+      'id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+      'file': MultipartFile(file, filename: "imageUpload_$rand.jpg"),
+    });
+    final response = await post(
+      "$url" + 'airsoft/update',
+      form,
+      headers: {"Authorization": "Bearer " + token},
+    );
+    try {
+      print("DATA RESPONSE UPDATE PRODUCT : ${response.body}");
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<dynamic> deleteProduct(String id, token) async {
+    final response = await delete('${url}airsoft/delete/$id',
+        headers: {"Authorization": "Bearer " + token});
+    try {
+      print("DATA RESPONSE DELETE PRODUCT : ${response.body}");
+      return itemProduct.fromJson(response.body);
+    } catch (e) {
+      throw Exception();
+    }
+  }
 }
-
-
-  
-
-  // Future<void> editProduct(String id, String name) async {
-  //   await patch(
-  //     "$url" + 'products/$id.json',
-  //     {
-  //       "name": name,
-  //     },
-  //   );
-  // }
-
-  
-
-  // Future<void> deleteProduct(String id) async =>
-  //     await delete("$url" + 'products/$id.json');
-

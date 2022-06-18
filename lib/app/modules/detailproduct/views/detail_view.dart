@@ -77,7 +77,13 @@ class DetailView extends StatelessWidget {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.toNamed(Routes.EDIT);
+                                    Get.toNamed(Routes.EDIT, arguments: [
+                                      cx.prd.value.data!.id,
+                                      cx.prd.value.data!.name,
+                                      cx.prd.value.data!.description,
+                                      cx.prd.value.data!.price,
+                                      cx.prd.value.data!.photo
+                                    ]);
                                   },
                                   child: Row(
                                     children: [
@@ -105,7 +111,10 @@ class DetailView extends StatelessWidget {
                                   ),
                                 ),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    cx.deleteItemProduct(
+                                        cx.prd.value.data!.id.toString());
+                                  },
                                   child: Row(
                                     children: [
                                       Icon(Icons.delete, color: Colors.white),

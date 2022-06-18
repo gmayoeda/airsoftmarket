@@ -1,5 +1,7 @@
 import 'package:airsoftmarket/app/modules/auth/login/bindings/login_binding.dart';
 import 'package:airsoftmarket/app/modules/auth/login/views/login_view.dart';
+import 'package:airsoftmarket/app/modules/cart/bindings/cart_binding.dart';
+import 'package:airsoftmarket/app/modules/cart/views/cart_screen.dart';
 import 'package:airsoftmarket/app/modules/detailproduct/bindings/detail_binding.dart';
 import 'package:airsoftmarket/app/modules/detailproduct/views/detail_view.dart';
 import 'package:airsoftmarket/app/modules/profile/bindings/profile_binding.dart';
@@ -33,6 +35,21 @@ class AppPages {
       // binding: HomeBinding(),
     ),
     GetPage(
+      name: _Paths.SPLASH,
+      page: () => SplashScreen(),
+      binding: SplashscreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => LoginPage(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => RegisterPage(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
@@ -53,24 +70,14 @@ class AppPages {
       binding: EditBinding(),
     ),
     GetPage(
-      name: _Paths.SPLASH,
-      page: () => SplashScreen(),
-      binding: SplashscreenBinding(),
-    ),
-    GetPage(
-      name: _Paths.LOGIN,
-      page: () => LoginPage(),
-      binding: LoginBinding(),
-    ),
-    GetPage(
-      name: _Paths.REGISTER,
-      page: () => RegisterPage(),
-      binding: RegisterBinding(),
-    ),
-    GetPage(
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CART,
+      page: () => CartScreen(),
+      binding: CartBinding(),
     ),
   ];
 }
