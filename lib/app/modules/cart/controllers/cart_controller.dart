@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class CartController extends GetxController {
+  String url = "https://openapi.mrstein.web.id/";
   GetStorage box = GetStorage();
   RxList<Airsoft> cart = <Airsoft>[].obs;
   RxInt grand_total = 0.obs;
