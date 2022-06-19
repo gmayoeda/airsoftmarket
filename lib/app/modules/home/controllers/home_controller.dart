@@ -1,7 +1,10 @@
+// ignore_for_file: unnecessary_type_check
+
 import 'package:airsoftmarket/app/data/dialog.dart';
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -13,6 +16,7 @@ class HomeController extends GetxController {
   RxList get list_prd => _list_prd;
 
   RxList<Airsoft> items = <Airsoft>[].obs;
+  RxList<Airsoft> cart = <Airsoft>[].obs;
 
   RxBool _isNoLoadMore = false.obs;
   bool get isNoLoadMore => _isNoLoadMore.value;
@@ -44,6 +48,28 @@ class HomeController extends GetxController {
     }
   }
 
+  void getStorage() {
+    if (GetStorage().hasData("items_cart")) {
+      List<dynamic> value = GetStorage().read("items_cart");
+      if (value is List) {
+        print(GetStorage().read("items_cart"));
+        cart.clear();
+        cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());
+      }
+
+      listenKey();
+    }
+  }
+
+  void listenKey() {
+    GetStorage().listenKey("items_cart", (value) {
+      if (value is List) {
+        cart.clear();
+        cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());
+      }
+    });
+  }
+
   void callProduct({bool refresh = false}) {
     if (refresh == true) {
       _isNoLoadMore.value = false;
@@ -67,16 +93,33 @@ class HomeController extends GetxController {
 
   // ALL ABOUT CART
 
-  void addToCart(String name, price, image) async {
-    var id = items.length + 1;
+  void addToCart(int id, String name, price, image) async {
+    // var id = items.length + 1;
     var qty = 1;
-    items
-        .add(Airsoft(id: id, name: name, image: image, price: price, qty: qty));
-    // print("itemsadd");
 
-    GetStorage().write("items_cart",
-        items.map((Airsoft airsoft) => airsoft.toJson()).toList());
-    print(GetStorage().read('items_cart'));
+    Airsoft? airsoft_in_cart =
+        cart.firstWhereOrNull((Airsoft cart_item) => cart_item.id == id);
+
+    if (airsoft_in_cart == null) {
+      items.add(
+          Airsoft(id: id, name: name, image: image, price: price, qty: qty));
+      // print("itemsadd");
+
+      GetStorage().write("items_cart",
+          items.map((Airsoft airsoft) => airsoft.toJson()).toList());
+      print(GetStorage().read('items_cart'));
+      Get.snackbar(
+        'Add to Cart',
+        "Berhasil ditambahkan ke Cart",
+        icon: Icon(Icons.add_shopping_cart_rounded, color: Colors.white),
+      );
+    } else {
+      Get.snackbar(
+        'Add to Cart',
+        "Produk sudah ada diCart",
+        icon: Icon(Icons.add_shopping_cart_rounded, color: Colors.white),
+      );
+    }
   }
 
   // void deleteItem(int id) async {
@@ -112,6 +155,7 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     getbox();
+    getStorage();
     callProduct();
     super.onReady();
   }

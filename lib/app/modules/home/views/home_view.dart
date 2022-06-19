@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable, unused_element
-import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/modules/home/controllers/home_controller.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
@@ -9,6 +8,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 
 class HomeView extends StatelessWidget {
   late HomeController cx;
+  late HomeController cc;
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +158,7 @@ class HomeView extends StatelessWidget {
                                               SizedBox(height: 20),
                                               // _buildQty(airsoft),
                                               // SizedBox(height: 10),
-                                              _buildAddToCart(index),
+                                              _buildAddToCart(index)
                                             ],
                                           ),
                                         ),
@@ -191,13 +191,21 @@ class HomeView extends StatelessWidget {
   Widget _buildAddToCart(index) {
     return InkWell(
       onTap: () {
+        // Airsoft? airsoft_in_cart = cx.cart.firstWhereOrNull(
+        //     (Airsoft cart_item) => cart_item.id == cx.list_prd[index].id);
+        // if (airsoft_in_cart == null) {
+        //   return
         cx.addToCart(
+            cx.list_prd[index].id,
             cx.list_prd[index].name,
             cx.list_prd[index].price
                 .toString()
                 .replaceAll("Rp. ", "")
                 .replaceAll(".", ""),
             cx.list_prd[index].photo);
+        // } else {
+        //   print("data ada di cart ============");
+        // }
       },
       child: Container(
         height: 32,

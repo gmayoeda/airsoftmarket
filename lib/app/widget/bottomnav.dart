@@ -1,4 +1,3 @@
-import 'package:airsoftmarket/app/modules/cart/views/cart_screen.dart';
 import 'package:airsoftmarket/app/modules/home/views/home_view.dart';
 import 'package:airsoftmarket/app/modules/profile/views/profile_view.dart';
 import 'package:airsoftmarket/app/utils/color.dart';

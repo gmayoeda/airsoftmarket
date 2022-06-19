@@ -3,7 +3,6 @@
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/modules/cart/controllers/cart_controller.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -72,7 +71,8 @@ class RowCart extends StatelessWidget {
                     "Total - Rp. " +
                         CurrencyTextInputFormatter(
                                 locale: 'id', symbol: '', decimalDigits: 0)
-                            .format(('${airsoft.price * airsoft.qty}')),
+                            .format((int.parse(airsoft.price) * airsoft.qty)
+                                .toString()),
                   ),
                   SizedBox(
                     height: 7,

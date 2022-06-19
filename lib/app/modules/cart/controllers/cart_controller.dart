@@ -1,5 +1,6 @@
+// ignore_for_file: unnecessary_type_check
+
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -7,13 +8,14 @@ class CartController extends GetxController {
   String url = "https://openapi.mrstein.web.id/";
   GetStorage box = GetStorage();
   RxList<Airsoft> cart = <Airsoft>[].obs;
+  RxInt sub_total = 0.obs;
   RxInt grand_total = 0.obs;
 
   void getStorage() {
     if (box.hasData("items_cart")) {
       List<dynamic> value = GetStorage().read("items_cart");
       if (value is List) {
-        print("To Here's");
+        print(GetStorage().read("items_cart"));
         cart.clear();
         cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());
         getGrandTotal();
@@ -31,12 +33,6 @@ class CartController extends GetxController {
         getGrandTotal();
       }
     });
-  }
-
-  @override
-  void onReady() {
-    getStorage();
-    super.onReady();
   }
 
   void getGrandTotal() {
@@ -145,5 +141,11 @@ class CartController extends GetxController {
     }
     box.write(
         "items_cart", cart.map((Airsoft airsoft) => airsoft.toJson()).toList());
+  }
+
+  @override
+  void onReady() {
+    getStorage();
+    super.onReady();
   }
 }

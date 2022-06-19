@@ -1,9 +1,11 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:airsoftmarket/app/modules/cart/controllers/cart_controller.dart';
 import 'package:airsoftmarket/app/modules/cart/views/row_cart.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CartScreen extends StatelessWidget {
   late CartController cx;
@@ -19,13 +21,14 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "  CART",
+          "CART",
         ),
       ),
       body: Container(
-          // color: Colors.black,
-          padding: EdgeInsets.all(10),
-          child: Obx(() {
+        // color: Colors.black,
+        padding: EdgeInsets.all(10),
+        child: Obx(
+          () {
             return cx.cart.isEmpty
                 ? _buildEmpty()
                 : Padding(
@@ -55,19 +58,30 @@ class CartScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   // cx.onPressProceed();
+                                  GetStorage()
+                                      .write("items_cart", []).then((value) {
+                                    cx.grand_total.value = 0;
+                                    cx.cart.clear();
+                                    Get.back();
+                                    Get.snackbar(
+                                        "Message", "Transaction succeed ! ",
+                                        colorText: Colors.white,
+                                        backgroundColor: Color(0xff4D4D4D),
+                                        snackPosition: SnackPosition.BOTTOM);
+                                  });
                                 },
                                 child: Container(
                                   width: double.infinity,
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                      color: Colors.yellow,
+                                      color: Colors.blueGrey,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
+                                          Radius.circular(15))),
                                   child: Center(
                                       child: Text(
                                     "Proceed",
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontFamily: "Poppins",
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
@@ -80,20 +94,16 @@ class CartScreen extends StatelessWidget {
                       ],
                     ),
                   );
-          })),
+          },
+        ),
+      ),
     );
   }
 
   Widget _buildEmpty() {
     return Center(
-        child: Text(
-      "Your Cart is Empty",
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Poppins"),
-    ));
+      child: Text("Your Cart is Empty"),
+    );
   }
 
   Widget _buildList() {
@@ -103,7 +113,7 @@ class CartScreen extends StatelessWidget {
               index: index,
             ),
         separatorBuilder: (ctx, index) => Divider(
-              color: Colors.white,
+              color: Colors.black54,
             ),
         itemCount: cx.cart.length);
   }
