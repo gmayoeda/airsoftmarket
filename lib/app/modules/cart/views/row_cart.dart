@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
+import 'package:airsoftmarket/app/data/server.dart';
 import 'package:airsoftmarket/app/modules/cart/controllers/cart_controller.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +24,16 @@ class RowCart extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 100,
+              width: 120,
+              height: 120,
               decoration:
                   BoxDecoration(borderRadius: new BorderRadius.circular(5.0)),
               child: Image.network(
-                cx.url + "uploads/" + airsoft.image,
+                Server.urlImg + airsoft.image,
                 fit: BoxFit.fitWidth,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset("assets/images/image-error.png");
@@ -44,16 +46,19 @@ class RowCart extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    airsoft.name,
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: Text(
+                      airsoft.name,
+                      style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   SizedBox(
                     height: 7,
@@ -68,14 +73,18 @@ class RowCart extends StatelessWidget {
                     height: 7,
                   ),
                   Text(
-                    "Total - Rp. " +
+                    "Subtotal - Rp. " +
                         CurrencyTextInputFormatter(
                                 locale: 'id', symbol: '', decimalDigits: 0)
                             .format((int.parse(airsoft.price) * airsoft.qty)
                                 .toString()),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green,
+                        fontSize: 16),
                   ),
                   SizedBox(
-                    height: 7,
+                    height: 15,
                   ),
                   _buildQty()
                 ],
@@ -98,13 +107,16 @@ class RowCart extends StatelessWidget {
             padding: EdgeInsets.all(3),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
-                border: Border.all(width: 1)),
+                border: Border.all(
+                  width: 1,
+                  color: Colors.red,
+                )),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.delete,
+                  Icons.delete, color: Colors.red,
                   //
                   size: 18,
                 ),
@@ -114,7 +126,7 @@ class RowCart extends StatelessWidget {
                 Text(
                   "Remove",
                   style: TextStyle(
-                      //
+                      color: Colors.red,
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.bold),
                 )

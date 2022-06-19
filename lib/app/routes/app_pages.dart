@@ -2,6 +2,8 @@ import 'package:airsoftmarket/app/modules/auth/login/bindings/login_binding.dart
 import 'package:airsoftmarket/app/modules/auth/login/views/login_view.dart';
 import 'package:airsoftmarket/app/modules/cart/bindings/cart_binding.dart';
 import 'package:airsoftmarket/app/modules/cart/views/cart_screen.dart';
+import 'package:airsoftmarket/app/modules/detailimage/bindings/image_binding.dart';
+import 'package:airsoftmarket/app/modules/detailimage/views/image_view.dart';
 import 'package:airsoftmarket/app/modules/detailproduct/bindings/detail_binding.dart';
 import 'package:airsoftmarket/app/modules/detailproduct/views/detail_view.dart';
 import 'package:airsoftmarket/app/modules/profile/bindings/profile_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.CART,
       page: () => CartScreen(),
       binding: CartBinding(),
+    ),
+    GetPage(
+      name: _Paths.IMAGE,
+      page: () => ImageView(),
+      binding: ImageBinding(),
     ),
   ];
 }

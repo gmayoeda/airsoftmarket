@@ -17,7 +17,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     cx = Get.find<RegisterController>();
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: mainColors,
       body: GestureDetector(
         child: Form(
           key: cx.LoginFormKey,

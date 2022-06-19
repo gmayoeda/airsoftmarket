@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:airsoftmarket/app/data/dialog.dart';
+import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +14,6 @@ class EditController extends GetxController {
   TextEditingController name = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController price = TextEditingController();
-
-  String url = "https://openapi.mrstein.web.id/";
 
   RxBool _isLoading = false.obs;
   bool get isLoading => _isLoading.value;

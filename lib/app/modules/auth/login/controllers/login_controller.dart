@@ -1,4 +1,4 @@
-import 'package:airsoftmarket/app/data/dialog.dart';
+import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/register_model.dart';
 import 'package:airsoftmarket/app/data/providers/auth_provider.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_type_check
 
-import 'package:airsoftmarket/app/data/dialog.dart';
+import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
-  String url = "https://openapi.mrstein.web.id/";
   RxString name = "".obs, email = "".obs, token = "".obs;
 
   RxList<Results> _list_prd = <Results>[].obs;

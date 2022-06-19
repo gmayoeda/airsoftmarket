@@ -12,6 +12,7 @@ class _BottomNavState extends State {
   int _selectedIndex = 0;
 
   final _widgetOptions = [
+    // Get.offAllNamed(Routes.HOME),
     HomeView(),
     // CartScreen(),
     ProfileView(),

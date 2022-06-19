@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'error_handling.dart';
+import '../data/error_handling.dart';
 
 showSnackBar(message,
     {String textButton = "", required Function() onButtonClick}) {

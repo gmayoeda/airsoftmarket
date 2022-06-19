@@ -1,4 +1,4 @@
-import 'package:airsoftmarket/app/data/dialog.dart';
+import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class DetailController extends GetxController {
-  String url = "https://openapi.mrstein.web.id/";
   // String id = "";
   RxString token = "".obs;
   Rx<itemProduct> prd = Rx(itemProduct());

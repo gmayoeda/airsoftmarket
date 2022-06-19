@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     cx = Get.find<LoginController>();
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: mainColors,
       body: GestureDetector(
         child: Form(
           key: cx.LoginFormKey,

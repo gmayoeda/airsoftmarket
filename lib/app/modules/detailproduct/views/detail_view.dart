@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:airsoftmarket/app/data/server.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -50,7 +51,7 @@ class DetailView extends StatelessWidget {
                           child: SizedBox(
                             width: double.infinity,
                             child: Image.network(
-                              cx.url + "uploads/${cx.prd.value.data!.photo}",
+                              Server.urlImg + "${cx.prd.value.data!.photo}",
                               fit: BoxFit.fill,
                               errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(
@@ -64,8 +65,50 @@ class DetailView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.toNamed(Routes.IMAGE,
+                                        arguments: cx.prd.value.data!.photo);
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.blue,
+                                        )),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.search, color: Colors.blue,
+                                          //
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text(
+                                          "View Image",
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 15),
                                 height: 30,

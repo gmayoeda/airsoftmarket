@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
+import 'package:airsoftmarket/app/data/server.dart';
 import 'package:get/get.dart';
 import 'dart:math' as Math;
 
 class ProductProvider extends GetConnect {
-  String url = "https://openapi.mrstein.web.id/";
-
   Future<Product> getProduct(String token, page) async {
     final response = await get(
-      "$url" + 'airsoft',
+      Server.url + 'airsoft',
       headers: {"Authorization": "Bearer " + token},
       query: {'page': '$page'},
     );
@@ -25,9 +24,8 @@ class ProductProvider extends GetConnect {
   }
 
   Future<itemProduct> getItemProduct(String id, token) async {
-    final response = await get('${url}airsoft/$id',
+    final response = await get(Server.url + 'airsoft/$id',
         headers: {"Authorization": "Bearer " + token});
-    // print("$url" + 'airsoft/$id');
     try {
       print("DATA RESPONSE ITEM PRODUCT : ${response.body}");
       return itemProduct.fromJson(response.body);
@@ -46,7 +44,7 @@ class ProductProvider extends GetConnect {
       'file': MultipartFile(file, filename: "imageUpload_$rand.jpg"),
     });
     final response = await post(
-      "$url" + 'airsoft/add',
+      Server.url + 'airsoft/add',
       form,
       headers: {"Authorization": "Bearer " + token},
     );
@@ -66,7 +64,7 @@ class ProductProvider extends GetConnect {
       'price': price,
     });
     final response = await post(
-      "$url" + 'airsoft/update',
+      Server.url + 'airsoft/update',
       form,
       headers: {"Authorization": "Bearer " + token},
     );
@@ -88,7 +86,7 @@ class ProductProvider extends GetConnect {
       'file': MultipartFile(file, filename: "imageUpload_$rand.jpg"),
     });
     final response = await post(
-      "$url" + 'airsoft/update',
+      Server.url + 'airsoft/update',
       form,
       headers: {"Authorization": "Bearer " + token},
     );
@@ -100,11 +98,26 @@ class ProductProvider extends GetConnect {
   }
 
   Future<dynamic> deleteProduct(String id, token) async {
-    final response = await delete('${url}airsoft/delete/$id',
+    final response = await delete(Server.url + 'airsoft/delete/$id',
         headers: {"Authorization": "Bearer " + token});
     try {
       print("DATA RESPONSE DELETE PRODUCT : ${response.body}");
       return itemProduct.fromJson(response.body);
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<dynamic> getImage(String token, image) async {
+    print(Server.urlImg + image);
+    final response = await get(
+      Server.urlImg + image,
+      headers: {"Authorization": "Bearer " + token},
+      // query: image,
+    );
+
+    try {
+      print("DATA RESPONSE SHOW IMAGE : ${response.body}");
     } catch (e) {
       throw Exception();
     }

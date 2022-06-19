@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+import 'package:airsoftmarket/app/data/server.dart';
 import 'package:airsoftmarket/app/modules/edit/controllers/edit_controller.dart';
 import 'package:airsoftmarket/app/widget/btn_loading.dart';
 import 'package:airsoftmarket/app/widget/btn_widget.dart';
@@ -133,8 +134,7 @@ class EditView extends StatelessWidget {
                             )
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.network(
-                                  cx.url + "uploads/${data[4]}",
+                              child: Image.network(Server.urlImg + "${data[4]}",
                                   height: 190,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover),

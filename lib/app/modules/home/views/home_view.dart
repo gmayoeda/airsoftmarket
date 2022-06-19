@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable, unused_element
+import 'package:airsoftmarket/app/data/server.dart';
 import 'package:airsoftmarket/app/modules/home/controllers/home_controller.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
@@ -103,8 +104,7 @@ class HomeView extends StatelessWidget {
                                           width: double.infinity,
                                           height: 150,
                                           child: Image.network(
-                                            cx.url +
-                                                "uploads/" +
+                                            Server.urlImg +
                                                 cx.list_prd[index].photo,
                                             fit: BoxFit.fitWidth,
                                             errorBuilder:
