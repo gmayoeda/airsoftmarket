@@ -2,7 +2,8 @@
 
 import 'package:airsoftmarket/app/modules/cart/controllers/cart_controller.dart';
 import 'package:airsoftmarket/app/modules/cart/views/row_cart.dart';
-import 'package:airsoftmarket/app/utils/color.dart';
+import 'package:airsoftmarket/app/widget/btn_loading.dart';
+import 'package:airsoftmarket/app/widget/btn_widget.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,31 +60,19 @@ class CartScreen extends StatelessWidget {
                                       fontSize: 20),
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  cx.submitTransaction();
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      color: mainColors,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  child: Center(
-                                      child: Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Poppins",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  )),
-                                ),
-                              )
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              Obx(() => cx.isLoading == true
+                                  ? BtnLoading()
+                                  : ButtonWidget(
+                                      icon: Icon(Icons.add_circle_outline,
+                                          color: Colors.white),
+                                      onClick: () {
+                                        cx.submitTransaction();
+                                      },
+                                      btnText: "SUBMIT",
+                                    ))
                             ],
                           ),
                         )

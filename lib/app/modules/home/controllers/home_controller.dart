@@ -51,6 +51,7 @@ class HomeController extends GetxController {
     if (GetStorage().hasData("items_cart")) {
       List<dynamic> value = GetStorage().read("items_cart");
       if (value is List) {
+        print("INI LIST CART==================================");
         print(GetStorage().read("items_cart"));
         cart.clear();
         cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());

@@ -1,5 +1,6 @@
 import 'package:airsoftmarket/app/modules/home/views/home_view.dart';
 import 'package:airsoftmarket/app/modules/profile/views/profile_view.dart';
+import 'package:airsoftmarket/app/modules/transaction/views/transaction_view.dart';
 import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _BottomNavState extends State {
   final _widgetOptions = [
     // Get.offAllNamed(Routes.HOME),
     HomeView(),
-    // CartScreen(),
+    TransactionView(),
     ProfileView(),
   ];
 
@@ -28,10 +29,10 @@ class _BottomNavState extends State {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.add_shopping_cart_outlined),
-          //   label: 'Cart',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.payments),
+            label: 'Transaction',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

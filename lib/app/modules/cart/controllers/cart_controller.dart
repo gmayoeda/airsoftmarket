@@ -16,7 +16,7 @@ class CartController extends GetxController {
   RxInt grand_total = 0.obs;
   RxString token = "".obs;
 
-  RxBool _isLoading = true.obs;
+  RxBool _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
   void getToken() {
@@ -32,7 +32,6 @@ class CartController extends GetxController {
     if (box.hasData("items_cart")) {
       List<dynamic> value = GetStorage().read("items_cart");
       if (value is List) {
-        print("INI LISTNYA======");
         print(GetStorage().read("items_cart"));
         cart.clear();
         cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());

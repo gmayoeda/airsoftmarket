@@ -15,6 +15,7 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const CART = _Paths.CART;
   static const IMAGE = _Paths.IMAGE;
+  static const TRMASTER = _Paths.TRMASTER;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const CART = '/cart';
   static const IMAGE = '/image';
+  static const TRMASTER = '/trmaster';
 }

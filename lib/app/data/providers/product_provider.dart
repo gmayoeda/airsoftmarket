@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
+import 'package:airsoftmarket/app/data/models/transaction_master.dart';
 import 'package:airsoftmarket/app/data/models/transaction_res.dart';
 import 'package:airsoftmarket/app/data/server.dart';
 import 'package:get/get.dart';
@@ -133,6 +134,29 @@ class ProductProvider extends GetConnect {
     try {
       print("DATA RESPONSE TRANSACTION : ${response.body}");
       return transactionRes.fromJson(response.body);
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<TransactionMaster> GetTransactionMaster(String token) async {
+    final response = await get(Server.url + "transaction",
+        headers: {"Authorization": "Bearer " + token});
+    try {
+      print("DATA RESPONSE GET TRANSACTION MASTER : ${response.body}");
+      return TransactionMaster.fromJson(response.body);
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<TransactionMaster> GetTransactionDetail(String token, id) async {
+    final response = await get(Server.url + "transaction/",
+        query: id, headers: {"Authorization": "Bearer " + token});
+
+    try {
+      print("DATA RESPONSE GET TRANSACTION DETAIL : ${response.body}");
+      return TransactionMaster.fromJson(response.body);
     } catch (e) {
       throw Exception();
     }

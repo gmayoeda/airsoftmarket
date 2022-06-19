@@ -9,7 +9,6 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 
 class HomeView extends StatelessWidget {
   late HomeController cx;
-  late HomeController cc;
 
   @override
   Widget build(BuildContext context) {

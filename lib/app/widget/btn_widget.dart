@@ -13,7 +13,7 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, bottom: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Container(
         decoration: BoxDecoration(
           color: mainColors,
