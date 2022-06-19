@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_type_check
 
+import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
@@ -25,7 +26,6 @@ class HomeController extends GetxController {
   // int qty = 0.obs as int;
 
   RxBool _isLoading = true.obs;
-
   bool get isLoading => _isLoading.value;
 
   int getItemLength() {
@@ -109,14 +109,30 @@ class HomeController extends GetxController {
       print(GetStorage().read('items_cart'));
       Get.snackbar(
         'Add to Cart',
-        "Berhasil ditambahkan ke Cart",
+        "Berhasil ditambahkan ke cart",
         icon: Icon(Icons.add_shopping_cart_rounded, color: Colors.white),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: mainColors,
+        borderRadius: 10,
+        margin: EdgeInsets.all(15),
+        colorText: Colors.white,
+        duration: Duration(seconds: 2),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
     } else {
       Get.snackbar(
         'Add to Cart',
-        "Produk sudah ada diCart",
+        "Produk sudah ada dicart",
         icon: Icon(Icons.add_shopping_cart_rounded, color: Colors.white),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: greyColors,
+        borderRadius: 10,
+        margin: EdgeInsets.all(15),
+        colorText: Colors.white,
+        duration: Duration(seconds: 2),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
     }
   }

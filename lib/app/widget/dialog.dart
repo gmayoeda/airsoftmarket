@@ -49,6 +49,10 @@ showSnackBar(message,
     margin: EdgeInsets.zero,
     backgroundColor: Colors.black,
     colorText: Colors.white,
+    borderRadius: 10,
+    duration: Duration(seconds: 3),
+    isDismissible: true,
+    forwardAnimationCurve: Curves.easeOutBack,
     /*duration: Duration(seconds: 10)*/
   );
 }

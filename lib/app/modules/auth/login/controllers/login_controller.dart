@@ -1,3 +1,4 @@
+import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/register_model.dart';
 import 'package:airsoftmarket/app/data/providers/auth_provider.dart';
@@ -38,7 +39,15 @@ class LoginController extends GetxController {
         reg.message == "Response Success !"
             ? "Login Berhasil"
             : '${reg.message}',
-        icon: Icon(Icons.app_registration_rounded, color: Colors.white),
+        icon: Icon(Icons.login, color: Colors.white),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: mainColors,
+        borderRadius: 10,
+        margin: EdgeInsets.all(15),
+        colorText: Colors.white,
+        duration: Duration(seconds: 4),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
 
       if (reg.success == true) {

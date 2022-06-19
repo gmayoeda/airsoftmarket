@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
+import 'package:airsoftmarket/app/data/models/transaction_res.dart';
 import 'package:airsoftmarket/app/data/server.dart';
 import 'package:get/get.dart';
 import 'dart:math' as Math;
@@ -118,6 +119,20 @@ class ProductProvider extends GetConnect {
 
     try {
       print("DATA RESPONSE SHOW IMAGE : ${response.body}");
+    } catch (e) {
+      throw Exception();
+    }
+  }
+
+  Future<transactionRes> postTransaction(
+      String token, List<dynamic> data) async {
+    final datajson = {"items": data};
+    final response = await post(Server.url + "transaction", datajson,
+        contentType: "Application/json",
+        headers: {"Authorization": "Bearer " + token});
+    try {
+      print("DATA RESPONSE TRANSACTION : ${response.body}");
+      return transactionRes.fromJson(response.body);
     } catch (e) {
       throw Exception();
     }

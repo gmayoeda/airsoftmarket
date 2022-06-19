@@ -1,3 +1,4 @@
+import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
@@ -51,6 +52,14 @@ class DetailController extends GetxController {
               'Delete Product',
               "Berhasil Delete Data Product",
               icon: Icon(Icons.delete_sweep, color: Colors.white),
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: mainColors,
+              borderRadius: 10,
+              margin: EdgeInsets.all(15),
+              colorText: Colors.white,
+              duration: Duration(seconds: 2),
+              isDismissible: true,
+              forwardAnimationCurve: Curves.easeOutBack,
             );
             Get.offAllNamed(Routes.NAVBOTTOM);
             _isLoading.value = false;

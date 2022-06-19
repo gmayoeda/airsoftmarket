@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:airsoftmarket/app/widget/dialog.dart';
 import 'package:airsoftmarket/app/data/providers/product_provider.dart';
 import 'package:airsoftmarket/app/routes/app_pages.dart';
@@ -78,6 +79,14 @@ class AddController extends GetxController {
           'Add Product',
           "Berhasil Menambahkan Data Product",
           icon: Icon(Icons.add_to_photos_rounded, color: Colors.white),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: mainColors,
+          borderRadius: 10,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.white,
+          duration: Duration(seconds: 2),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
         );
         Get.offAllNamed(Routes.NAVBOTTOM);
       }).onError((error, stackTrace) {

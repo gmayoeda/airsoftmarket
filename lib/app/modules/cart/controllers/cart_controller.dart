@@ -1,6 +1,11 @@
 // ignore_for_file: unnecessary_type_check
 
 import 'package:airsoftmarket/app/data/models/airsoft.dart';
+import 'package:airsoftmarket/app/data/providers/product_provider.dart';
+import 'package:airsoftmarket/app/routes/app_pages.dart';
+import 'package:airsoftmarket/app/utils/color.dart';
+import 'package:airsoftmarket/app/widget/dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -9,11 +14,25 @@ class CartController extends GetxController {
   RxList<Airsoft> cart = <Airsoft>[].obs;
   RxInt sub_total = 0.obs;
   RxInt grand_total = 0.obs;
+  RxString token = "".obs;
+
+  RxBool _isLoading = true.obs;
+  bool get isLoading => _isLoading.value;
+
+  void getToken() {
+    if (GetStorage().hasData('users')) {
+      Map<String, dynamic> users = GetStorage().read('users');
+      token.value = users['token'] ?? "";
+    } else {
+      print('no getbox!');
+    }
+  }
 
   void getStorage() {
     if (box.hasData("items_cart")) {
       List<dynamic> value = GetStorage().read("items_cart");
       if (value is List) {
+        print("INI LISTNYA======");
         print(GetStorage().read("items_cart"));
         cart.clear();
         cart.addAll(value.map((e) => Airsoft.fromMap(Map.from(e))).toList());
@@ -41,84 +60,47 @@ class CartController extends GetxController {
     }
   }
 
-  // void onPressProceed(){
-  //     Get.defaultDialog(
-  //         title: "Really want to proceed ?",
-  //         // onConfirm: (){
-
-  //         // },
-  //         actions: [
-  //           ElevatedButton(
-  //               style: ButtonStyle(
-  //                   backgroundColor: MaterialStateProperty.all(Colors.black)
-  //               ),
-  //               onPressed: (){
-  //                 Get.back();
-  //               },
-  //               child: Text("Cancel")
-  //           ),
-  //           ElevatedButton(
-  //               style: ButtonStyle(
-  //                 backgroundColor: MaterialStateProperty.all(Colors.yellow)
-  //               ),
-  //               onPressed: (){
-  //                 box.write("items_cart", []).then((value){
-  //                   grand_total.value=0;
-  //                   cart.clear();
-  //                   Get.back();
-  //                   Get.snackbar("Message", "Transaction succeed ! ",colorText: Colors.white,backgroundColor: Color(0xff4D4D4D),snackPosition: SnackPosition.BOTTOM);
-  //                 });
-  //               },
-  //               child: Text("Confirm",style: TextStyle(color: Colors.black),)
-  //           )
-  //         ],
-  //         backgroundColor: Color(0xff4D4D4D),
-  //         titleStyle: TextStyle(color: Colors.white,fontFamily: 'Poppins',fontSize: 17,fontWeight: FontWeight.bold),
-  //         // textConfirm: "Confirm",
-  //         // textCancel: "Cancel",
-  //         // cancelTextColor: Colors.white,
-  //         // confirmTextColor: Colors.black,
-  //         // buttonColor: Colors.yellow,
-  //         content: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             Container(
-  //               width: 300,
-  //               height: 200,
-  //               child: ListView.separated(
-  //                 separatorBuilder: (_,i)=>Divider(),
-  //                 itemCount: cart.length,
-  //                 itemBuilder: (_,index){
-  //                   return ListTile(
-  //                     leading: Container(
-  //                       width: 60,
-  //                       height: 80,
-  //                       decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                           image: DecorationImage(
-  //                               fit: BoxFit.cover,
-  //                               image: AssetImage(cart[index].image)
-  //                           )
-  //                       ),
-  //                     ),
-  //                     title:Text(cart[index].name,style: TextStyle(color: Colors.white,fontFamily: "Poppins",fontWeight: FontWeight.bold,fontSize: 12),),
-  //                     subtitle: Text("Rp. "+Formatter.format.format(cart[index].price)+" x "+cart[index].qty.toString(),
-  //                       style: TextStyle(fontFamily: "Poppins",color: Colors.white,fontSize: 10),),
-  //                   );
-  //                 },
-  //               ),
-  //             ),
-  //             SizedBox(height: 5,),
-  //             Text(userSession["name"],style: TextStyle(color: Colors.white,fontFamily: 'Poppins',fontWeight: FontWeight.bold,fontSize: 12),),
-  //             SizedBox(height: 5,),
-  //             Text(userSession["email"],style: TextStyle(color: Colors.white,fontFamily: 'Poppins',fontWeight: FontWeight.bold,fontSize: 12),),
-  //             SizedBox(height: 5,),
-  //             Text("Total Rp. "+Formatter.format.format(grand_total.value),style: TextStyle(color: Colors.white,fontFamily: 'Poppins',fontWeight: FontWeight.bold,fontSize: 12),)
-  //           ],
-  //         )
-  //     );
-  // }
+  void submitTransaction() {
+    Get.defaultDialog(
+      title: "Submit Transaction",
+      content: Text('Lanjutkan Transaksi?'),
+      textCancel: "Kembali",
+      textConfirm: "Submit",
+      confirmTextColor: Colors.white,
+      onConfirm: () {
+        _isLoading.value = true;
+        ProductProvider()
+            .postTransaction(token.value, GetStorage().read("items_cart"))
+            .then((_) {
+          // GetStorage().remove("items_cart");
+          GetStorage().write("items_cart", []);
+          grand_total.value = 0;
+          cart.clear();
+          Get.snackbar(
+            'Transaction Status',
+            "Transaksi berhasil ditambahkan",
+            icon: Icon(Icons.delete_sweep, color: Colors.white),
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: mainColors,
+            borderRadius: 10,
+            margin: EdgeInsets.all(15),
+            colorText: Colors.white,
+            duration: Duration(seconds: 2),
+            isDismissible: true,
+            forwardAnimationCurve: Curves.easeOutBack,
+          );
+          Get.offAllNamed(Routes.NAVBOTTOM);
+          _isLoading.value = false;
+        }).onError((error, stackTrace) {
+          showSnackBar(error, onButtonClick: () {});
+        });
+      },
+      barrierDismissible: false,
+      radius: 10,
+    ).onError((error, stackTrace) {
+      showSnackBar(error, onButtonClick: () {});
+    });
+  }
 
   void deleteItem(int index) async {
     cart.removeAt(index);
@@ -144,6 +126,7 @@ class CartController extends GetxController {
 
   @override
   void onReady() {
+    getToken();
     getStorage();
     super.onReady();
   }

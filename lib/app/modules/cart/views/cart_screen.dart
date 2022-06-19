@@ -6,7 +6,6 @@ import 'package:airsoftmarket/app/utils/color.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class CartScreen extends StatelessWidget {
   late CartController cx;
@@ -65,18 +64,7 @@ class CartScreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  // cx.onPressProceed();
-                                  GetStorage()
-                                      .write("items_cart", []).then((value) {
-                                    cx.grand_total.value = 0;
-                                    cx.cart.clear();
-                                    Get.back();
-                                    Get.snackbar(
-                                        "Message", "Transaction succeed ! ",
-                                        colorText: Colors.white,
-                                        backgroundColor: Color(0xff4D4D4D),
-                                        snackPosition: SnackPosition.BOTTOM);
-                                  });
+                                  cx.submitTransaction();
                                 },
                                 child: Container(
                                   width: double.infinity,

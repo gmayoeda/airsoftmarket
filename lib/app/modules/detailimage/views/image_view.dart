@@ -21,19 +21,21 @@ class ImageView extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       backgroundColor: Colors.black,
-      body: PinchZoom(
-        maxScale: 2.5,
-        // onZoomStart: () {
-        //   print('Start zooming');
-        // },
-        // onZoomEnd: () {
-        //   print('Stop zooming');
-        // },
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(Server.urlImg + Get.arguments.toString()),
-                fit: BoxFit.fitWidth),
+      body: Center(
+        child: PinchZoom(
+          maxScale: 2.5,
+          // onZoomStart: () {
+          //   print('Start zooming');
+          // },
+          // onZoomEnd: () {
+          //   print('Stop zooming');
+          // },
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(Server.urlImg + Get.arguments.toString()),
+                  fit: BoxFit.fitWidth),
+            ),
           ),
         ),
       ),
