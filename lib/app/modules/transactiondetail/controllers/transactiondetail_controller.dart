@@ -26,9 +26,8 @@ class TrDetailController extends GetxController {
   void getGrandTotal() {
     grand_total.value = 0;
     for (int i = 0; i < list_trdetail.length; i++) {
-      grand_total = grand_total +
-          int.parse(list_trdetail[i].price * list_trdetail[i].qty);
-      print(grand_total);
+      grand_total =
+          grand_total + (list_trdetail[i].price * list_trdetail[i].qty);
     }
   }
 
@@ -40,7 +39,7 @@ class TrDetailController extends GetxController {
       if (trdetail.data!.detail!.isNotEmpty) {
         list_trdetail.addAll(trdetail.data!.detail!);
       }
-      // getGrandTotal();
+      getGrandTotal();
       _isLoading.value = false;
     }).onError((error, stackTrace) {
       showSnackBar(error, onButtonClick: () {});

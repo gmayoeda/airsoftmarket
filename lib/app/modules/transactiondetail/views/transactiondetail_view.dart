@@ -19,6 +19,8 @@ class TransactionDetailView extends StatelessWidget {
     cx.list_trdetail.clear();
     cx.getTransactionDetail(Get.arguments[0].toString());
 
+    cx.getGrandTotal();
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -154,42 +156,20 @@ class TransactionDetailView extends StatelessWidget {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    cx.list_trdetail.length == 2
-                        ? Text(
-                            "Rp. " +
-                                CurrencyTextInputFormatter(
-                                        locale: 'id',
-                                        symbol: '',
-                                        decimalDigits: 0)
-                                    .format(((cx.list_trdetail[0].price *
-                                                cx.list_trdetail[0].qty) +
-                                            (cx.list_trdetail[1].price *
-                                                cx.list_trdetail[1].qty))
-                                        .toString()),
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          )
-                        : cx.list_trdetail.length == 1
-                            ? Text(
-                                "Rp. " +
-                                    CurrencyTextInputFormatter(
-                                            locale: 'id',
-                                            symbol: '',
-                                            decimalDigits: 0)
-                                        .format((((cx.list_trdetail[0].price *
-                                                    cx.list_trdetail[0].qty))
-                                                .toString())
-                                            .toString()),
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30),
-                              )
-                            : Text(''),
+                    // for (int i = 0; i < cx.list_trdetail.length; i++)
+                    Obx(
+                      () => Text(
+                        "Rp. " +
+                            CurrencyTextInputFormatter(
+                                    locale: 'id', symbol: '', decimalDigits: 0)
+                                .format('${cx.grand_total.value}'),
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30),
+                      ),
+                    ),
                   ],
                 )
               : Container(),

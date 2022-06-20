@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:airsoftmarket/app/data/flavor_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +16,11 @@ void main() async {
   // ]);
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  FlavorConfig(
+    flavor: Flavor.dev,
+    baseUrl: 'https://openapi.mrstein.web.id/',
+    appName: '[DEV] Airsoft Market',
+  );
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,

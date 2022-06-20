@@ -18,8 +18,12 @@ dependencies:
   currency_text_input_formatter: 2.1.5
   image_picker: 0.8.4+4
   pinch_zoom: 1.0.0
+  flutter_launcher_icons: ^0.9.3
 
-
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/airsoftmarket.png"
 
 
 dev_dependencies:
