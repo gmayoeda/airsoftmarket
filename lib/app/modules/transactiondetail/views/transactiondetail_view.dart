@@ -1,5 +1,3 @@
-import 'package:airsoftmarket/app/widget/btn_loading.dart';
-import 'package:airsoftmarket/app/widget/btn_widget.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
