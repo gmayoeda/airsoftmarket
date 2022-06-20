@@ -12,6 +12,8 @@ import 'package:airsoftmarket/app/modules/splashscreen/bindings/splash_binding.d
 import 'package:airsoftmarket/app/modules/splashscreen/view/splashscreen_view.dart';
 import 'package:airsoftmarket/app/modules/transaction/bindings/trmaster_binding.dart';
 import 'package:airsoftmarket/app/modules/transaction/views/transaction_view.dart';
+import 'package:airsoftmarket/app/modules/transactiondetail/bindings/trmaster_binding.dart';
+import 'package:airsoftmarket/app/modules/transactiondetail/views/transactiondetail_view.dart';
 import 'package:airsoftmarket/app/widget/bottomnav.dart';
 import 'package:get/get.dart';
 
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.TRMASTER,
       page: () => TransactionView(),
       binding: TrMasterBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRDETAIL,
+      page: () => TransactionDetailView(),
+      binding: TrDetailBinding(),
     ),
   ];
 }

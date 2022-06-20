@@ -1,3 +1,4 @@
+import 'package:airsoftmarket/app/routes/app_pages.dart';
 import 'package:airsoftmarket/app/widget/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,52 +25,79 @@ class TransactionView extends StatelessWidget {
           child: Obx(
             () => cx.list_trmaster.isEmpty
                 ? LoadingView()
-                : ListView.builder(
-                    itemCount: cx.list_trmaster.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index < cx.list_trmaster.length) {
-                        return Container(
-                          // margin: EdgeInsets.symmetric(horizontal: 20),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[100],
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                width: 0.5,
-                                color: Colors.grey.withOpacity(0.2)),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.article_rounded),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    cx.list_trmaster[index].transCode,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                DateFormat.yMMMd()
-                                    .format(DateTime.parse(
-                                        cx.list_trmaster[index].date))
-                                    .toString(),
-                                // cx.list_trmaster[index].date,
-                                style: TextStyle(
-                                    color: Colors.blue[700],
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return Container();
+                : NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollNotification) {
+                      if (scrollNotification.metrics.pixels ==
+                          scrollNotification.metrics.maxScrollExtent) {
+                        if (cx.isNoLoadMore == false) {
+                          if (cx.isLoading == false) {
+                            cx.getTransactionMaster();
+                          }
+                        }
                       }
+                      return true;
                     },
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        cx.getTransactionMaster(refresh: true);
+                      },
+                      child: ListView.builder(
+                        itemCount: cx.getItemLength(),
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index < cx.list_trmaster.length) {
+                            return Column(
+                              children: [
+                                Card(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.toNamed(Routes.TRDETAIL, arguments: [
+                                        cx.list_trmaster[index].id,
+                                        cx.list_trmaster[index].transCode,
+                                        cx.list_trmaster[index].date
+                                      ]);
+                                    },
+                                    child: ListTile(
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(Icons.article_rounded),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                cx.list_trmaster[index]
+                                                    .transCode,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            DateFormat.yMMMd()
+                                                .format(DateTime.parse(cx
+                                                    .list_trmaster[index].date))
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.blue[700],
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                      trailing: Icon(Icons.navigate_next),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                    ),
                   ),
           ),
         ),

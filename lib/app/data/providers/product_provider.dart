@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:airsoftmarket/app/data/models/item_product_model.dart';
 import 'package:airsoftmarket/app/data/models/product_model.dart';
+import 'package:airsoftmarket/app/data/models/transaction_detail.dart';
 import 'package:airsoftmarket/app/data/models/transaction_master.dart';
 import 'package:airsoftmarket/app/data/models/transaction_res.dart';
 import 'package:airsoftmarket/app/data/server.dart';
@@ -139,9 +140,13 @@ class ProductProvider extends GetConnect {
     }
   }
 
-  Future<TransactionMaster> GetTransactionMaster(String token) async {
-    final response = await get(Server.url + "transaction",
-        headers: {"Authorization": "Bearer " + token});
+  Future<TransactionMaster> GetTransactionMaster(String token, page) async {
+    final response = await get(
+      Server.url + "transaction",
+      headers: {"Authorization": "Bearer " + token},
+      query: {'page': '$page'},
+    );
+
     try {
       print("DATA RESPONSE GET TRANSACTION MASTER : ${response.body}");
       return TransactionMaster.fromJson(response.body);
@@ -150,14 +155,20 @@ class ProductProvider extends GetConnect {
     }
   }
 
-  Future<TransactionMaster> GetTransactionDetail(String token, id) async {
-    final response = await get(Server.url + "transaction/",
-        query: id, headers: {"Authorization": "Bearer " + token});
+  Future<TransactionDetail> GetTransactionDetail(String token, id) async {
+    final response = await get(Server.url + "transaction/$id",
+        headers: {"Authorization": "Bearer " + token});
 
     try {
       print("DATA RESPONSE GET TRANSACTION DETAIL : ${response.body}");
-      return TransactionMaster.fromJson(response.body);
+
+      // if (response.body['success'] != false) {
+      return TransactionDetail.fromJson(response.body);
+      // } else {
+      //   print("data null");
+      // }
     } catch (e) {
+      print('response NULL');
       throw Exception();
     }
   }
