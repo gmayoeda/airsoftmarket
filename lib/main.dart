@@ -16,11 +16,11 @@ void main() async {
   // ]);
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  FlavorConfig(
-    flavor: Flavor.dev,
-    baseUrl: 'https://openapi.mrstein.web.id/',
-    appName: '[DEV] Airsoft Market',
-  );
+  // FlavorConfig(
+  //   flavor: Flavor.dev,
+  //   baseUrl: 'https://openapi.mrstein.web.id/',
+  //   appName: '[DEV] Airsoft Market',
+  // );
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,

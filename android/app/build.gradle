@@ -58,17 +58,17 @@ android {
         }
     }
 
-    flavorDimensions "flavors"
-    productFlavors {
-        dev {
-            dimension "flavors"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
-        }
-        prod {
-            dimension "flavors"
-        }
-    }
+    // flavorDimensions "flavors"
+    // productFlavors {
+    //     dev {
+    //         dimension "flavors"
+    //         applicationIdSuffix ".dev"
+    //         versionNameSuffix "-dev"
+    //     }
+    //     prod {
+    //         dimension "flavors"
+    //     }
+    // }
 }
 
 flutter {
